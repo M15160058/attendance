@@ -38,6 +38,8 @@ ELSE:
 ✅ Works on mobile & desktop
 ✅ Simple, lightweight
 ✅ Easy deployment on Streamlit Cloud
+
+
 📍 Configuration
 
 Inside app.py you can change:
