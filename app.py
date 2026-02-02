@@ -10,7 +10,7 @@ components.html(
 """
 <!DOCTYPE html>
 <html>
-<body style="text-align:center;font-family:Arial;">
+<body style="text-align:center;font-family:Arial;color:#fff;">
 
 <p id="status">Requesting location...</p>
 <p id="distance"></p>
@@ -65,7 +65,7 @@ if(navigator.geolocation){
       }else{
 
           document.getElementById("status").innerHTML =
-          "❌ Access denied. You must be within campus to submit attendance.";
+          "❌ Access denied. You must be present in the seminar room to submit attendance.";
 
       }
 
