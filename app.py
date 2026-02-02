@@ -15,7 +15,7 @@ components.html(
 <script>
 const targetLat = 39.132473;
 const targetLng = -84.5170492;
-const allowedRadius = 150; // meters
+const allowedRadius = 50; // meters
 
 function toRad(value) {
   return value * Math.PI / 180;
