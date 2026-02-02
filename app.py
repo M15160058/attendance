@@ -18,7 +18,7 @@ components.html(
 <script>
 const targetLat = 39.132473;
 const targetLng = -84.5170492;
-const allowedRadius = 100; // meters
+const allowedRadius = 50; // meters
 
 const formURL = "https://forms.office.com/Pages/ResponseDetailPage.aspx?id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUQjNURzRWRjNHQTlHOVlTMjZTSTBXVlZYMy4u&rid=1&GetResponseToken=MEHauwlpPSlbD8Zivgzk26RDEUhsHk15fpGrl17RNno&origin=rc";
 
