@@ -3,26 +3,14 @@ import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Attendance Check", layout="centered")
 
-FORM_URL = "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUMlVIUEtTQ0xaWEUxTDFZMjUzM0xLUFVJVC4u"
-
-# If verified, redirect immediately
-if "verified" in st.session_state and st.session_state.verified:
-    st.markdown(
-        f"""
-        <meta http-equiv="refresh" content="0; url={FORM_URL}">
-        """,
-        unsafe_allow_html=True,
-    )
-    st.stop()
-
 st.title("📍 Attendance Verification")
 st.write("Checking your location... Please allow GPS access.")
 
-result = components.html(
+components.html(
 """
 <!DOCTYPE html>
 <html>
-<body style="text-align:center;font-family:Arial;color:white;">
+<body style="text-align:center;font-family:Arial;">
 
 <p id="status">Requesting location...</p>
 
@@ -30,6 +18,8 @@ result = components.html(
 const targetLat = 39.132473;
 const targetLng = -84.5170492;
 const allowedRadius = 3000;
+
+const formURL = "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUMlVIUEtTQ0xaWEUxTDFZMjUzM0xLUFVJVC4u";
 
 function toRad(value){
   return value * Math.PI / 180;
@@ -58,15 +48,20 @@ if(navigator.geolocation){
       const dist = getDistance(lat,lng,targetLat,targetLng);
 
       if(dist <= allowedRadius){
+
           document.getElementById("status").innerHTML =
-          "✅ Location verified...";
-          
-          // Send success to Streamlit
-          window.parent.postMessage("verified", "*");
+          "✅ Location verified. Opening attendance form...";
+
+          setTimeout(function(){
+              window.open(formURL, "_blank");
+              window.close();
+          }, 1000);
 
       }else{
+
           document.getElementById("status").innerHTML =
-          "❌ Access denied. You must be in seminar room.";
+          "❌ Access denied. You must be present in seminar room.";
+
       }
 
   },
@@ -84,10 +79,5 @@ if(navigator.geolocation){
 </body>
 </html>
 """,
-height=200,
+height=200
 )
-
-# Listen for JS message
-if result == "verified":
-    st.session_state.verified = True
-    st.rerun()
