@@ -48,7 +48,7 @@ body {
 <script>
 const targetLat = 39.132473;
 const targetLng = -84.5170492;
-const allowedRadius = 60;
+const allowedRadius = 100;
 
 const formURL = "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUMlVIUEtTQ0xaWEUxTDFZMjUzM0xLUFVJVC4u";
 
