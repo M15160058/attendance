@@ -59,7 +59,7 @@ if(navigator.geolocation){
           "✅ Location verified. Redirecting to attendance form...";
 
           setTimeout(function(){
-              window.location.href = formURL;
+              window.top.location.href = formURL;
           }, 1500);
 
       }else{
