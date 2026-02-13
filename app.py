@@ -20,7 +20,7 @@ const targetLat = 39.132473;
 const targetLng = -84.5170492;
 const allowedRadius = 90; // meters
 
-const formURL = "https://forms.office.com/Pages/ResponseDetailPage.aspx?id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUQjNURzRWRjNHQTlHOVlTMjZTSTBXVlZYMy4u&rid=1&GetResponseToken=MEHauwlpPSlbD8Zivgzk26RDEUhsHk15fpGrl17RNno&origin=rc";
+const formURL = "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUMlVIUEtTQ0xaWEUxTDFZMjUzM0xLUFVJVC4u";
 
 function toRad(value){
   return value * Math.PI / 180;
