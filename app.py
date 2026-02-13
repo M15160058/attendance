@@ -18,7 +18,7 @@ components.html(
 <script>
 const targetLat = 39.132473;
 const targetLng = -84.5170492;
-const allowedRadius = 3000; // meters
+const allowedRadius = 3000;
 
 const formURL = "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUMlVIUEtTQ0xaWEUxTDFZMjUzM0xLUFVJVC4u";
 
@@ -28,7 +28,6 @@ function toRad(value){
 
 function getDistance(lat1, lon1, lat2, lon2){
   const R = 6371000;
-
   const dLat = toRad(lat2-lat1);
   const dLon = toRad(lon2-lon1);
 
@@ -47,7 +46,6 @@ if(navigator.geolocation){
 
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
-
       const dist = getDistance(lat,lng,targetLat,targetLng);
 
       document.getElementById("distance").innerHTML =
@@ -56,16 +54,16 @@ if(navigator.geolocation){
       if(dist <= allowedRadius){
 
           document.getElementById("status").innerHTML =
-          "✅ Location verified. Redirecting to attendance form...";
+          "✅ Location verified. Redirecting...";
 
           setTimeout(function(){
-              window.top.location.href = formURL;
-          }, 1500);
+              window.top.location.href = formURL;  // 🔥 FIXED
+          }, 1000);
 
       }else{
 
           document.getElementById("status").innerHTML =
-          "❌ Access denied. You must be present in the seminar room to submit attendance.";
+          "❌ Access denied. You must be present in the seminar room.";
 
       }
 
