@@ -3,24 +3,33 @@ import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Attendance Check", layout="centered")
 
+FORM_URL = "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUMlVIUEtTQ0xaWEUxTDFZMjUzM0xLUFVJVC4u"
+
+# If verified, redirect immediately
+if "verified" in st.session_state and st.session_state.verified:
+    st.markdown(
+        f"""
+        <meta http-equiv="refresh" content="0; url={FORM_URL}">
+        """,
+        unsafe_allow_html=True,
+    )
+    st.stop()
+
 st.title("📍 Attendance Verification")
 st.write("Checking your location... Please allow GPS access.")
 
-components.html(
+result = components.html(
 """
 <!DOCTYPE html>
 <html>
-<body style="text-align:center;font-family:Arial;color:#fff;">
+<body style="text-align:center;font-family:Arial;color:white;">
 
 <p id="status">Requesting location...</p>
-<p id="distance"></p>
 
 <script>
 const targetLat = 39.132473;
 const targetLng = -84.5170492;
 const allowedRadius = 3000;
-
-const formURL = "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=bC4i9cZf60iPA3PbGCA7Y3zURXDN2c1Mk8io1jX0SGNUMlVIUEtTQ0xaWEUxTDFZMjUzM0xLUFVJVC4u";
 
 function toRad(value){
   return value * Math.PI / 180;
@@ -48,29 +57,22 @@ if(navigator.geolocation){
       const lng = position.coords.longitude;
       const dist = getDistance(lat,lng,targetLat,targetLng);
 
-      document.getElementById("distance").innerHTML =
-        "Distance: " + Math.round(dist) + " meters";
-
       if(dist <= allowedRadius){
-
           document.getElementById("status").innerHTML =
-          "✅ Location verified. Redirecting...";
-
-          setTimeout(function(){
-              window.top.location.href = formURL;  // 🔥 FIXED
-          }, 1000);
+          "✅ Location verified...";
+          
+          // Send success to Streamlit
+          window.parent.postMessage("verified", "*");
 
       }else{
-
           document.getElementById("status").innerHTML =
-          "❌ Access denied. You must be present in the seminar room.";
-
+          "❌ Access denied. You must be in seminar room.";
       }
 
   },
   function(error){
       document.getElementById("status").innerHTML =
-      "❌ Please enable GPS to continue.";
+      "❌ Please enable GPS.";
   });
 
 }else{
@@ -82,5 +84,10 @@ if(navigator.geolocation){
 </body>
 </html>
 """,
-height=250
+height=200,
 )
+
+# Listen for JS message
+if result == "verified":
+    st.session_state.verified = True
+    st.rerun()
