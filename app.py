@@ -10,7 +10,38 @@ components.html(
 """
 <!DOCTYPE html>
 <html>
-<body style="text-align:center;font-family:Arial;">
+<head>
+<style>
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+#status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 250px;
+}
+
+.success {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #28a745;
+}
+
+.error {
+    background-color: #fdecea;
+    color: #b02a37;
+    border: 1px solid #dc3545;
+}
+</style>
+</head>
+
+<body>
 
 <p id="status">Requesting location...</p>
 
@@ -39,6 +70,8 @@ function getDistance(lat1, lon1, lat2, lon2){
   return R*c;
 }
 
+const status = document.getElementById("status");
+
 if(navigator.geolocation){
 
   navigator.geolocation.getCurrentPosition(function(position){
@@ -49,7 +82,8 @@ if(navigator.geolocation){
 
       if(dist <= allowedRadius){
 
-          document.getElementById("status").innerHTML =
+          status.className = "success";
+          status.innerHTML =
           "✅ Location verified. Opening attendance form...";
 
           setTimeout(function(){
@@ -59,19 +93,22 @@ if(navigator.geolocation){
 
       }else{
 
-          document.getElementById("status").innerHTML =
+          status.className = "error";
+          status.innerHTML =
           "❌ Access denied. You must be present in seminar room.";
 
       }
 
   },
   function(error){
-      document.getElementById("status").innerHTML =
-      "❌ Please enable GPS.";
+      status.className = "error";
+      status.innerHTML =
+      "❌ Please enable GPS to continue.";
   });
 
 }else{
-  document.getElementById("status").innerHTML =
+  status.className = "error";
+  status.innerHTML =
   "❌ Geolocation not supported.";
 }
 </script>
@@ -79,5 +116,5 @@ if(navigator.geolocation){
 </body>
 </html>
 """,
-height=200
+height=250
 )
